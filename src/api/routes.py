@@ -7,6 +7,24 @@ from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
 
+@api.route('/signup', methods=['POST'])
+def login_user():
+    body_request = request.get_json()
+    email_request = body_request.get("email", None)
+    password_request = body_request.get("password", None)
+    
+    # to check the user existence
+    if email_request == None or password_request == None:
+        return jsonify({"msg": "Bad email or password"}), 401
+    
+    user_checked = User.query.filter_by(email = email_request).one_or_none()
+    # to check email and contraseña
+    if not user_checked or check_password_hash(password_hash, "wrong-passw@rd"):
+        return jsonify("Your credentials are wrong, please try again"), 401
+    
+    # New token
+    access_token = create_access_token(identity = user_checked.serialize())
+    return jsonify({"access_token": access_token, "user": user_checked.serialize()}), 200
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
