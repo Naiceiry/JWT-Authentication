@@ -7,7 +7,7 @@ export const Register = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="containerFormSignup">
+    <div className="containerFormSignin">
       <form>
         <div class="form-group">
           <h1>Email address</h1>

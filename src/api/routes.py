@@ -8,14 +8,17 @@ from api.utils import generate_sitemap, APIException
 api = Blueprint('api', __name__)
 
 @api.route('/signup', methods=['POST'])
-def login_user():
+def sign_up_user():
     body_request = request.get_json()
+    full_name= body_request.get("fullname", None)
+    address= body_request.get("address", None)
+    phone= body_request.get("phone", None)
     email_request = body_request.get("email", None)
     password_request = body_request.get("password", None)
-    
+    password_hash = generate_password_hash(password_request, "sha256")
     # to check the user existence
     if email_request == None or password_request == None:
-        return jsonify({"msg": "Bad email or password"}), 401
+        return jsonify({"msg": "No lo consigo, registrese"}), 401
     
     user_checked = User.query.filter_by(email = email_request).one_or_none()
     # to check email and contraseña
