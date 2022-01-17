@@ -10,24 +10,29 @@ api = Blueprint('api', __name__)
 @api.route('/signup', methods=['POST'])
 def sign_up_user():
     body_request = request.get_json()
+    print(body_request)
     full_name= body_request.get("fullname", None)
     address= body_request.get("address", None)
     phone= body_request.get("phone", None)
     email_request = body_request.get("email", None)
     password_request = body_request.get("password", None)
-    password_hash = generate_password_hash(password_request, "sha256")
+    # password_hash = generate_password_hash(password_request, "sha256")
+
+    user1=User(full_name=full_name,address=address, phone=phone, email_request=email_request, password_request=password_request)
+    db.session.add(user1)
+    db.session.commit()
     # to check the user existence
     if email_request == None or password_request == None:
-        return jsonify({"msg": "No lo consigo, registrese"}), 401
+        return jsonify({"msg": "Debe introducir Email y contraseña"}), 401
     
-    user_checked = User.query.filter_by(email = email_request).one_or_none()
-    # to check email and contraseña
-    if not user_checked or check_password_hash(password_hash, "wrong-passw@rd"):
-        return jsonify("Your credentials are wrong, please try again"), 401
+    # user_checked = User.query.filter_by(email = email_request).one_or_none()
+    # # to check email and contraseña
+    # if not user_checked or check_password_hash(password_hash, "wrong-passw@rd"):
+    #     return jsonify("Your credentials are wrong, please try again"), 401
     
     # New token
-    access_token = create_access_token(identity = user_checked.serialize())
-    return jsonify({"access_token": access_token, "user": user_checked.serialize()}), 200
+    # # access_token = create_access_token(identity = user_checked.serialize())
+    return jsonify({"msg": "El usuario a sido creado exitosamente"}), 200
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
