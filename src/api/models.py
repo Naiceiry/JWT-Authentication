@@ -4,7 +4,6 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=True)
     full_name= db.Column(db.String(80), unique=False, nullable=False)
     address= db.Column(db.String(120), unique=False, nullable=False)
