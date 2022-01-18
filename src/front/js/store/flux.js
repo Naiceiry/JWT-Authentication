@@ -4,6 +4,16 @@ const getState = ({ getStore, getActions, setStore }) => {
       user: [],
     },
     actions: {
+      getLocalStore: () => {
+        const tmpStore = {};
+        paramValue = JSON.parse(localStorage.getItem(paramName)) || "";
+
+        if (paramValue) {
+          tmpStore[paramName] = paramValue;
+          setStore({ myLocalStore: tmpStore });
+        }
+      },
+
       signup: async (formValue) => {
         const requestOptions = {
           method: "POST",
@@ -14,22 +24,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const response = await fetch(
-            `${API_BASE_URL}/api/signin`,
+            `${API_BASE_URL}/api/signup`,
             requestOptions
           );
-          console.log("entre al flux linea 57");
           if (response.status === 401) {
             const errorMsg = await response.json();
-            console.log("entre al flux linea 60");
+            console.log("algo esta mal linea 22 flux");
             throw new Error(errorMsg);
           } else {
             const newStore = await response.json();
             setStore({ user: newStore });
             localStorage.setItem("user", JSON.stringify(newStore.user));
-            console.log("entre al flux linea 66");
+            console.log("guardado");
           }
         } catch (error) {
-          console.log("entre al flux linea 69");
           return error.message;
         }
       },

@@ -5,9 +5,6 @@ import { Context } from "../store/appContext";
 
 export const Signup = () => {
   const { store, actions } = useContext(Context);
-  const history = useHistory();
-  const { user_id } = useParams();
-  const closeBtn = useRef(null);
   const [formValue, setFormValue] = useState({
     fullname: "",
     address: "",
