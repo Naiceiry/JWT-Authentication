@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       user: [],
     },
     actions: {
-      signin: async (formValue) => {
+      signup: async (formValue) => {
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
