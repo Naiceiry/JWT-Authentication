@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-
+from werkzeug.security import safe_str_cmp
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -23,3 +23,6 @@ class User(db.Model):
             "phone":self.phone,
             # do not serialize the password, its a security breach
         }
+
+    def check_password(self, password_param):
+        return safe_str_cmp (self.password.encode('utf-8'), password_param.encode('utf-8'))

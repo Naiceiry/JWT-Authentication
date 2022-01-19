@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
-
+from flask_jwt_extended import create_access_token
 api = Blueprint('api', __name__)
 
 @api.route('/signup', methods=['POST'])
@@ -33,6 +33,23 @@ def sign_up_user():
     # New token
     # # access_token = create_access_token(identity = user_checked.serialize())
     return jsonify({"msg": "El usuario a sido creado exitosamente"}), 200
+
+@api.route('/signin', methods=['POST'])
+def sign_in_user():
+    body_request = request.get_json()
+    email_request = body_request.get("email", None)
+    password_request = body_request.get("password", None)
+    # password_hash = generate_password_hash(password_request, "sha256")
+
+    if email_request == None or password_request == None:
+        return jsonify({"msg": "Debe introducir Email y contraseña"}), 401
+   
+    user=User.query.filter_by(email_request=email).one_or_none()
+    if not user or not user.check_password(password_request):
+        return jsonify({"msg": "noexiste usuario o clave"}), 401    
+
+    access_token=create_access_token(identity=email_request)
+    return jsonify({"access_token": access_token}), 200
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
