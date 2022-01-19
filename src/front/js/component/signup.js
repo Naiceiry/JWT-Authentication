@@ -22,9 +22,8 @@ export const Signup = () => {
     e.preventDefault();
     const signUpError = await actions.signup(formValue);
     actions.getLocalStore();
-
     if (!signUpError) {
-      history.push(`/signup/${JSON.parse(localStorage.getItem("user")).id}`);
+      history.push(`/enter`);
     }
   };
 
@@ -34,89 +33,89 @@ export const Signup = () => {
         onSubmit={handlerSubmit}
         className="col-12 p-5 text-white formSignUp"
       >
-        <div class="form-group">
+        <div className="form-group">
           <h1>Email address</h1>
           <input
             name="email"
             type="email"
-            class="form-control"
+            className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             onChange={inputHandelChange}
             autoFocus
             required
           />
-          <small id="emailHelp" class="form-text text-white">
+          <small id="emailHelp" className="form-text text-white">
             We'll never share your email with anyone else.
           </small>
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <h1>Repeat Email address</h1>
           <input
             type="email"
-            class="form-control"
+            className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             required
           />
-          <small id="emailHelp" class="form-text text-white">
+          <small id="emailHelp" className="form-text text-white">
             We'll never share your email with anyone else.
           </small>
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <h1>Password</h1>
           <input
             name="password"
             type="password"
-            class="form-control"
+            className="form-control"
             id="exampleInputPassword1"
             onChange={inputHandelChange}
             required
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <h1>Repeat Password</h1>
           <input
             type="password"
-            class="form-control"
+            className="form-control"
             id="exampleInputPassword1"
             required
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <h1>Full Name</h1>
           <input
             name="fullname"
             type="name"
-            class="form-control"
+            className="form-control"
             id="exampleInputPassword1"
             onChange={inputHandelChange}
             required
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <h1>Address</h1>
           <input
             name="address"
             type="address"
-            class="form-control"
+            className="form-control"
             id="exampleInputPassword1"
             onChange={inputHandelChange}
             required
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <h1>Phone</h1>
           <input
             name="phone"
             type="phone"
-            class="form-control"
+            className="form-control"
             id="exampleInputPassword1"
             onChange={inputHandelChange}
             required
           />
         </div>
-        <button type="submit" class="btn btn-warning ">
+        <button type="submit" className="btn btn-warning ">
           Submit
         </button>
       </form>

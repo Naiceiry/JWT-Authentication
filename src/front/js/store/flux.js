@@ -6,15 +6,21 @@ const getState = ({ getStore, getActions, setStore }) => {
     actions: {
       getLocalStore: () => {
         const tmpStore = {};
-        paramValue = JSON.parse(localStorage.getItem(paramName)) || "";
 
-        if (paramValue) {
-          tmpStore[paramName] = paramValue;
-          setStore({ myLocalStore: tmpStore });
-        }
+        Object.keys(localStorage).forEach((paramName) => {
+          paramValue = JSON.parse(localStorage.getItem(paramName)) || "";
+          console.log("guardado");
+
+          if (paramValue) {
+            tmpStore[paramName] = paramValue;
+            setStore({ myLocalStore: tmpStore });
+          }
+        });
       },
 
       signup: async (formValue) => {
+        const store = getStore();
+
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -23,13 +29,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         try {
+          console.log("AQUI ENTRA FLUX L32");
           const response = await fetch(
             `${API_BASE_URL}/api/signup`,
             requestOptions
           );
-          if (response.status === 401) {
-            const errorMsg = await response.json();
-            console.log("algo esta mal linea 22 flux");
+          if (response.status >= 400) {
+            const errorMsg = "Error during the sign up process";
             throw new Error(errorMsg);
           } else {
             const newStore = await response.json();
@@ -41,7 +47,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           return error.message;
         }
       },
-
       getMessage: () => {
         // fetching data from the backend
         fetch(process.env.BACKEND_URL + "/api/hello")
