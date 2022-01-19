@@ -5,6 +5,9 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+
 api = Blueprint('api', __name__)
 
 @api.route('/signup', methods=['POST'])
@@ -44,12 +47,24 @@ def sign_in_user():
     if email_request == None or password_request == None:
         return jsonify({"msg": "Debe introducir Email y contraseña"}), 401
    
-    user=User.query.filter_by(email_request=email).one_or_none()
+    user=User.query.filter_by(email_request=email_request).one_or_none()
     if not user or not user.check_password(password_request):
-        return jsonify({"msg": "noexiste usuario o clave"}), 401    
+        return jsonify({"msg": "no existe usuario o clave"}), 401    
 
-    access_token=create_access_token(identity=email_request)
+    access_token=create_access_token(identity=user.serialize())
     return jsonify({"access_token": access_token}), 200
+    
+@api.route('/me', methods=['POST', 'GET'])
+@jwt_required()
+def user_profile():
+    identity=get_jwt_identity()
+    user=current_user(get_jwt_identity())
+
+    return jsonify(user.serialize())
+
+def current_user(identity):
+    print(identity)
+    return User.query.get(identity)
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
