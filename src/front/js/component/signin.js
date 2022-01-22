@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
+import { apiBaseUrl } from "../constants";
 
 export const Signin = () => {
   const { actions } = useContext(Context);
   const [formValue, setFormValue] = useState({
-    email: "",
-    password: "",
+    email_request: "",
+    password_request: "",
   });
+
   const [errorMsg, setErrorMsg] = useState(null);
   const inputHandelChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
@@ -16,17 +19,20 @@ export const Signin = () => {
 
   const handlerSubmit = async (e) => {
     console.log("entre a handlersubmit e singin");
-    e.preventDefault(); //CANCELA EL EVENTO SI ES CANCELABLE
-    // login function
-    let loginError = await actions.signin(formValue);
-    //actions.getLocalStore();
-
-    if (loginError) {
-      console.log("estoy el signin linea 25");
-      setErrorMsg(loginError);
-    } else {
-      console.log("estoy el signin linea 16");
-    }
+    e.preventDefault(); //evita que el form se envie. no se recarga la pagina
+    var raw = JSON.stringify(formValue);
+    var requestoption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: raw,
+    };
+    fetch(apiBaseUrl + "/api/signin", requestoption)
+      .then((response = response.text()))
+      .then((result) => {
+        console.log("User was created");
+        history.push("/enter");
+      })
+      .catch((error) => console.log("error", error));
   };
   return (
     <div className="containerFormSignin">
@@ -35,35 +41,39 @@ export const Signin = () => {
         className="col-12 p-5 myBox text-white"
         id="loginForm"
       >
-        <div class="form-group">
+        <div className="form-group">
           <h2>Email address</h2>
           <input
+            name="email_request"
             type="email"
-            class="form-control"
+            className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             onChange={inputHandelChange}
           />
-          <small id="emailHelp" class="form-text text-white">
+          <small id="emailHelp" className="form-text text-white">
             We'll never share your email with anyone else.
           </small>
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <h2>Password</h2>
           <input
+            name="password_request"
             type="password"
-            class="form-control"
+            className="form-control"
             id="exampleInputPassword1"
             onChange={inputHandelChange}
           />
         </div>
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-          <label class="form-check-label text-white" for="exampleCheck1">
-            Check me out
-          </label>
+        <div className="form-group form-check">
+          <input
+            type="checkbox"
+            className="form-check-input"
+            id="exampleCheck1"
+          />
+          <label className="form-check-label text-white">Check me out</label>
         </div>
-        <button type="submit" class="btn btn-warning ">
+        <button type="submit" className="btn btn-warning ">
           Submit
         </button>
       </form>
