@@ -22,7 +22,8 @@ export const Signup = () => {
     e.preventDefault();
     const signUpError = await actions.signup(formValue);
     actions.getLocalStore();
-    if (!signUpError) {
+    actions.signup();
+    if (signUpError) {
       history.push(`/enter`);
     }
   };
@@ -52,9 +53,10 @@ export const Signup = () => {
         <div className="form-group">
           <h1>Repeat Email address</h1>
           <input
-            type="email"
+            name="emailr"
+            type="emailr"
             className="form-control"
-            id="exampleInputEmail1"
+            id="exampleInputEmail2"
             aria-describedby="emailHelp"
             required
           />
@@ -76,9 +78,10 @@ export const Signup = () => {
         <div className="form-group">
           <h1>Repeat Password</h1>
           <input
-            type="password"
+            name="passwordr"
+            type="passwordr"
             className="form-control"
-            id="exampleInputPassword1"
+            id="exampleInputPassword2"
             required
           />
         </div>
@@ -88,7 +91,7 @@ export const Signup = () => {
             name="fullname"
             type="name"
             className="form-control"
-            id="exampleInputPassword1"
+            id="exampleInputPassword12"
             onChange={inputHandelChange}
             required
           />
@@ -99,7 +102,7 @@ export const Signup = () => {
             name="address"
             type="address"
             className="form-control"
-            id="exampleInputPassword1"
+            id="exampleInputPassword1ff2"
             onChange={inputHandelChange}
             required
           />
@@ -110,7 +113,7 @@ export const Signup = () => {
             name="phone"
             type="phone"
             className="form-control"
-            id="exampleInputPassword1"
+            id="exampleInputPassword1111"
             onChange={inputHandelChange}
             required
           />

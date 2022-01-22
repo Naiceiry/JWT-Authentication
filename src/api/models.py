@@ -12,12 +12,13 @@ class User(db.Model):
     password_request= db.Column(db.String(80), unique=False, nullable=False)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.email_request
 
     def serialize(self):
         return {
             "id": self.id,
-            "email_request": self.email_request 
+            "email_request": self.email_request,
+            "password_request": self.password_request 
         }
 
     def check_password(self, password_param):

@@ -40,8 +40,8 @@ def sign_up_user():
 @api.route('/signin', methods=['POST'])
 def sign_in_user():
     body_request = request.get_json()
-    email_request = body_request.get("email", None)
-    password_request = body_request.get("password", None)
+    email_request = body_request.get("email_request", None)
+    password_request = body_request.get("password_request", None)
     # password_hash = generate_password_hash(password_request, "sha256")
 
     if email_request == None or password_request == None:

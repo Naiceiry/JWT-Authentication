@@ -39,7 +39,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             throw new Error(errorMsg);
           } else {
             const newStore = await response.json();
-            setStore({ user: newStore });
+            setStore({ user: response.json() });
             localStorage.setItem("user", JSON.stringify(newStore.user));
             console.log("guardado");
           }
@@ -49,7 +49,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getMessage: () => {
         // fetching data from the backend
-        fetch(process.env.BACKEND_URL + "/api/hello")
+        fetch(process.env.BACKEND_URL + "/api/admin")
           .then((resp) => resp.json())
           .then((data) => setStore({ message: data.message }))
           .catch((error) =>
