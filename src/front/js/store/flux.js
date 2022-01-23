@@ -1,4 +1,4 @@
-import {apiBaseUrl} from "../constants";
+import { apiBaseUrl } from "../constants";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -34,7 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           console.log("AQUI ENTRA FLUX L32");
           const response = await fetch(
-            `${API_BASE_URL}/api/signup`,
+            `${apiBaseUrl}/api/signup`,
             requestOptions
           );
           if (response.status >= 400) {
@@ -51,8 +51,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       /******ACCESO AL TOKEN *******/
-      signInUser: (signInParams) => {
-        var raw = JSON.stringify(signInParams);
+      signInUser: (formValue) => {
+        var raw = JSON.stringify(formValue);
         var requestoption = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -68,9 +68,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       /****para poder verificar en cualquier si hay una sesion iniciada o no */
       /****Autheticated?**********************/
-      isUserAuthenticated:()=>{
-        const store=getStore();
-        return store.accessToken !== null; 
+      isUserAuthenticated: () => {
+        const store = getStore();
+        return store.accessToken !== null;
       },
       /*****************************/
       getMessage: () => {

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
+import { useHistory } from "react-router-dom";
+import { apiBaseUrl } from "../constants";
 
 export const Signup = () => {
   const { store, actions } = useContext(Context);
@@ -23,8 +25,11 @@ export const Signup = () => {
     const signUpError = await actions.signup(formValue);
     actions.getLocalStore();
     actions.signup();
+
+    let history = useHistory();
     if (signUpError) {
-      history.push(`/enter`);
+      console.log("registro exitoso");
+      history.push("/enter");
     }
   };
 

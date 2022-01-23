@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { apiBaseUrl } from "../constants";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
-import { apiBaseUrl } from "../constants";
 
 export const Signin = () => {
   const { actions } = useContext(Context);
@@ -23,10 +23,10 @@ export const Signin = () => {
     actions.signInUser(formValue);
   };
 
-  let history= useHistory();
-  if(actions.isUserAuthenticated()){
+  let history = useHistory();
+  if (actions.isUserAuthenticated()) {
     console.log("Inicio de sesion exitoso!");
-    history.push("/enter")
+    history.push("/enter");
   }
   return (
     <div className="containerFormSignin">
