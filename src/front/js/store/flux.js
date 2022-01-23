@@ -1,7 +1,10 @@
+import {apiBaseUrl} from "../constants";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      user: [],
+      message: null,
+      user: null,
+      accessToken: null,
     },
     actions: {
       getLocalStore: () => {
@@ -17,7 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         });
       },
-
+      /******SIGNUP *******/
       signup: async (formValue) => {
         const store = getStore();
 
@@ -47,6 +50,29 @@ const getState = ({ getStore, getActions, setStore }) => {
           return error.message;
         }
       },
+      /******ACCESO AL TOKEN *******/
+      signInUser: (signInParams) => {
+        var raw = JSON.stringify(signInParams);
+        var requestoption = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: raw,
+        };
+        fetch(apiBaseUrl + "/api/signin", requestoption)
+          .then((response = response.json()))
+          .then((data) => {
+            debugger; /* parar ejecucion en este momento del navegador */
+            setStore({ accessToken: data["accesToken"], user: data });
+          })
+          .catch((error) => console.log("error", error));
+      },
+      /****para poder verificar en cualquier si hay una sesion iniciada o no */
+      /****Autheticated?**********************/
+      isUserAuthenticated:()=>{
+        const store=getStore();
+        return store.accessToken !== null; 
+      },
+      /*****************************/
       getMessage: () => {
         // fetching data from the backend
         fetch(process.env.BACKEND_URL + "/api/admin")

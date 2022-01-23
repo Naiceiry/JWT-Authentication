@@ -20,20 +20,14 @@ export const Signin = () => {
   const handlerSubmit = async (e) => {
     console.log("entre a handlersubmit e singin");
     e.preventDefault(); //evita que el form se envie. no se recarga la pagina
-    var raw = JSON.stringify(formValue);
-    var requestoption = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: raw,
-    };
-    fetch(apiBaseUrl + "/api/signin", requestoption)
-      .then((response = response.text()))
-      .then((result) => {
-        console.log("User was created");
-        history.push("/enter");
-      })
-      .catch((error) => console.log("error", error));
+    actions.signInUser(formValue);
   };
+
+  let history= useHistory();
+  if(actions.isUserAuthenticated()){
+    console.log("Inicio de sesion exitoso!");
+    history.push("/enter")
+  }
   return (
     <div className="containerFormSignin">
       <form
