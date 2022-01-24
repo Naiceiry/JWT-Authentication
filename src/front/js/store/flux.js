@@ -32,7 +32,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         try {
-          console.log("AQUI ENTRA FLUX L32");
           const response = await fetch(
             `${apiBaseUrl}/api/signup`,
             requestOptions
