@@ -32,18 +32,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         try {
-          const response = await fetch(
+          const respon = await fetch(
             `${apiBaseUrl}/api/signup`,
             requestOptions
           );
-          if (response.status >= 400) {
+          if (respon.status >= 400) {
             const errorMsg = "Error during the sign up process";
             throw new Error(errorMsg);
           } else {
-            const newStore = await response.json();
-            setStore({ user: response.json() });
+            let history = useHistory();
+            const newStore = await respon.json();
+            setStore({ user: respon.json() });
             localStorage.setItem("user", JSON.stringify(newStore.user));
-            console.log("guardado");
+            console.log("guardadollll");
+            history.push("/enter");
           }
         } catch (error) {
           return error.message;

@@ -27,10 +27,10 @@ export const Signup = () => {
     actions.signup();
 
     let history = useHistory();
-    if (signUpError) {
-      console.log("registro exitoso");
-      history.push("/enter");
-    }
+    /*if (signUpError) {
+      console.log("registro exitoso");*/
+    history.push("/enter");
+    /* }*/
   };
 
   return (
