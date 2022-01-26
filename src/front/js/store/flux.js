@@ -37,12 +37,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorMsg = "Error during the sign up process";
             throw new Error(errorMsg);
           } else {
-            let history = useHistory();
             const newStore = await respon.json();
-            setStore({ user: newStore });
-            localStorage.setItem("user", JSON.stringify(newStore.user));
+            setStore({ accessToken: newStore["access_token"] });
+            localStorage.setItem(
+              "token",
+              JSON.stringify(newStore["access_token"])
+            );
             console.log("guardadollll");
-            history.push("/enter");
           }
         } catch (error) {
           return error.message;
@@ -59,8 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         fetch(apiBaseUrl + "/api/signin", requestoption)
           .then((response) => response.json())
           .then((data) => {
-            debugger; /* parar ejecucion en este momento del navegador */
-            setStore({ accessToken: data["accesToken"], user: data });
+            setStore({ accessToken: data["access_token"] });
           })
           .catch((error) => console.log("error", error));
       },

@@ -14,7 +14,7 @@ export const Signup = () => {
     password: "",
     phone: "",
   });
-
+  let history = useHistory();
   const inputHandelChange = (e) => {
     //"[e.target.name]" is the name of form inputs
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
@@ -22,17 +22,17 @@ export const Signup = () => {
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
-    const signUpError = await actions.signup(formValue);
-    actions.getLocalStore();
+    /*const signUpError = await actions.signup(formValue);*/
 
     // let history = useHistory();
     // if (signUpError) {
     //   console.log("registro exitoso");
     //   history.push("/enter");
     // }
-    let history = useHistory();
-    if (actions.signup()) {
+
+    if (actions.signup(formValue)) {
       console.log("registro exitoso");
+      // actions.getLocalStore();
       history.push("/enter");
     }
   };

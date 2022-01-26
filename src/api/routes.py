@@ -35,8 +35,8 @@ def sign_up_user():
     #     return jsonify("Your credentials are wrong, please try again"), 401
     
     # New token
-    # # access_token = create_access_token(identity = user_checked.serialize())
-    return jsonify({"msg": "El usuario a sido creado exitosamente"}), 200
+    access_token=create_access_token(identity=user.serialize())  
+    return jsonify({"msg": "El usuario a sido creado exitosamente" , "access_token": access_token }), 200
 
 @api.route('/signin', methods=['POST'])
 def sign_in_user():
@@ -48,7 +48,7 @@ def sign_in_user():
     if email_request == None or password_request == None:
         return jsonify({"msg": "Debe introducir Email y contraseña"}), 401
    
-    user=User.query.filter_by(email_request=email_request).one_or_none()
+    user=User.query.filter_by(email_request=email_request).first()
     if not user or not user.check_password(password_request):
         return jsonify({"msg": "no existe usuario o clave"}), 401    
 
