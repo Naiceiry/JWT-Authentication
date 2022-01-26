@@ -12,7 +12,7 @@ api = Blueprint('api', __name__)
 
 @api.route('/signup', methods=['POST'])
 def sign_up_user():
-    body_request = request.get_json()
+    body_request = request.get_json()   
     print(body_request)
     full_name= body_request.get("fullname", None)
     address= body_request.get("address", None)
@@ -24,6 +24,7 @@ def sign_up_user():
     user1=User(full_name=full_name,address=address, phone=phone, email_request=email_request, password_request=password_request)
     db.session.add(user1)
     db.session.commit()
+    print(user1.serialize())
     # to check the user existence
     if email_request == None or password_request == None:
         return jsonify({"msg": "Debe introducir Email y contraseña"}), 401

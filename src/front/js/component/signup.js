@@ -24,13 +24,17 @@ export const Signup = () => {
     e.preventDefault();
     const signUpError = await actions.signup(formValue);
     actions.getLocalStore();
-    actions.signup();
 
+    // let history = useHistory();
+    // if (signUpError) {
+    //   console.log("registro exitoso");
+    //   history.push("/enter");
+    // }
     let history = useHistory();
-    /*if (signUpError) {
-      console.log("registro exitoso");*/
-    history.push("/enter");
-    /* }*/
+    if (actions.signup()) {
+      console.log("registro exitoso");
+      history.push("/enter");
+    }
   };
 
   return (

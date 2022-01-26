@@ -25,7 +25,7 @@ export const Signin = () => {
 
   let history = useHistory();
   if (actions.isUserAuthenticated()) {
-    console.log("Inicio de sesion exitoso!");
+    console.log("Inicio de sesion exitoso! nay");
     history.push("/enter");
   }
   return (

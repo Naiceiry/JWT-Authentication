@@ -22,13 +22,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       /******SIGNUP *******/
       signup: async (formValue) => {
-        const store = getStore();
-
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formValue),
-          redirect: "follow",
         };
 
         try {
@@ -42,7 +39,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else {
             let history = useHistory();
             const newStore = await respon.json();
-            setStore({ user: respon.json() });
+            setStore({ user: newStore });
             localStorage.setItem("user", JSON.stringify(newStore.user));
             console.log("guardadollll");
             history.push("/enter");
@@ -60,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: raw,
         };
         fetch(apiBaseUrl + "/api/signin", requestoption)
-          .then((response = response.json()))
+          .then((response) => response.json())
           .then((data) => {
             debugger; /* parar ejecucion en este momento del navegador */
             setStore({ accessToken: data["accesToken"], user: data });
