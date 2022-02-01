@@ -11,7 +11,9 @@ export const Signup = () => {
     fullname: "",
     address: "",
     email: "",
+    emailr: "",
     password: "",
+    passwordr: "",
     phone: "",
   });
   let history = useHistory();
@@ -19,21 +21,21 @@ export const Signup = () => {
     //"[e.target.name]" is the name of form inputs
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
-
   const handlerSubmit = async (e) => {
     e.preventDefault();
-    /*const signUpError = await actions.signup(formValue);*/
-
-    // let history = useHistory();
-    // if (signUpError) {
-    //   console.log("registro exitoso");
-    //   history.push("/enter");
-    // }
-
-    if (actions.signup(formValue)) {
-      console.log("registro exitoso");
-      // actions.getLocalStore();
-      history.push("/enter");
+    if (formValue.email == formValue.emailr) {
+      if (formValue.password == formValue.passwordr) {
+        alert("Registro Exitoso, adelante");
+        if (actions.signup(formValue)) {
+          history.push("/enter");
+        } else {
+          alert("Hay un problema , no se pudo guardar");
+        }
+      } else {
+        alert("password y repetir password deben ser iguales");
+      }
+    } else {
+      alert("emails y repetir email deben ser iguales");
     }
   };
 
@@ -63,10 +65,11 @@ export const Signup = () => {
           <h1>Repeat Email address</h1>
           <input
             name="emailr"
-            type="emailr"
+            type="email"
             className="form-control"
-            id="exampleInputEmail2"
+            id="emailr"
             aria-describedby="emailHelp"
+            onChange={inputHandelChange}
             required
           />
           <small id="emailHelp" className="form-text text-white">
@@ -88,9 +91,10 @@ export const Signup = () => {
           <h1>Repeat Password</h1>
           <input
             name="passwordr"
-            type="passwordr"
+            type="password"
             className="form-control"
             id="exampleInputPassword2"
+            onChange={inputHandelChange}
             required
           />
         </div>

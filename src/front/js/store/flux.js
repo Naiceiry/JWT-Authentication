@@ -80,6 +80,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("Error loading message from backend", error)
           );
       },
+      /********cerrarr sesion *****/
+      logOut: () => {
+        setStore({ user: null, accessToken: null });
+        localStorage.clear();
+      },
     },
   };
 };
